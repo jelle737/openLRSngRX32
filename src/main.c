@@ -5,22 +5,35 @@ static void _putc(void *p, char c)
 }
 
 
-int main(void)
+void checkReflash()
 {
-  uint8_t i,leds=7;
-  uint32_t time;
-  systemInit();
-  init_printf(NULL, _putc);
-  uartInit(115200);
-  delay(100);
-
+  uint32_t time,i=0;
   time=millis();
+  LEDB_ON;
   while ((millis() - time) < 2000) {
+    delay(100);
+    if ((i++)&1) {
+      LEDG_ON;
+    } else {
+      LEDG_OFF;
+    }
+
     if (uartAvailable() && ('R' == uartRead())) {
       systemReset(true);      // reboot to bootloader
     }
   }
+  LEDB_OFF;
+  LEDG_OFF;
+}
 
+int main(void)
+{
+  uint8_t i,leds=7;
+  systemInit();
+  init_printf(NULL, _putc);
+  uartInit(115200);
+  delay(100);
+  checkReflash();
   configurePWMs();
   configureSPI();
   for (i=0; i<16; i++) {
@@ -29,8 +42,6 @@ int main(void)
 
   // loopy
   while (1) {
-
-    //selectRFM(leds&3);
 
     if (leds&8) {
       LEDR_ON;
@@ -49,7 +60,6 @@ int main(void)
     }
     leds<<=1;
     if (!leds) leds=7;
-    printf("SPI2->SR=%x\n",SPI2->SR);
 
     while (uartAvailable()) {
       uint8_t c = uartRead();
@@ -59,7 +69,9 @@ int main(void)
       }
     }
 
-    SPI_I2S_SendData(SPI2, 0x55);
+    printf("reg0=%x\r\n",rfmReadRegister(1,0));
+    printf("reg1=%x\r\n",rfmReadRegister(1,1));
+
     delay(100);
   }
 }
