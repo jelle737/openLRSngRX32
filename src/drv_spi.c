@@ -77,11 +77,9 @@ void configureSPI()
   SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
   SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;
   SPI_InitStruct.SPI_DataSize = SPI_DataSize_16b;
-  SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256; //8
+  SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
   SPI_Init(SPI2, &SPI_InitStruct);
   SPI_Cmd(SPI2, ENABLE);
-  printf("SPICR1=%x\n",SPI2->CR1);
-  printf("SPICR2=%x\n",SPI2->CR2);
 
 }
 

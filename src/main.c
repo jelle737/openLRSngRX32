@@ -34,8 +34,8 @@ int main(void)
   uartInit(115200);
   delay(100);
   checkReflash();
-  configurePWMs();
   configureSPI();
+  configurePWMs();
   for (i=0; i<16; i++) {
     setPWM(i,1000+i*50);
   }
