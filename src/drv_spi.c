@@ -8,6 +8,20 @@
   PC15 GPIO RFM2CS
 */
 
+void selectRFM(uint8_t which)
+{
+  digitalHi(GPIOB,GPIO_Pin_12);
+  digitalHi(GPIOC,GPIO_Pin_15);
+  switch (which) {
+  case 1: digitalLo(GPIOB,GPIO_Pin_12);
+    break;
+  case 2: digitalLo(GPIOC,GPIO_Pin_15);
+    break;
+  default:
+    break;
+  }
+}
+
 void configureSPI()
 {
   //  NVIC_InitTypeDef NVIC_InitStructure;
@@ -33,8 +47,6 @@ void configureSPI()
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-
 
   SPI_StructInit(&SPI_InitStruct);
   SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;

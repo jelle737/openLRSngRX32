@@ -20,6 +20,9 @@ int main(void)
 
   // loopy
   while (1) {
+
+    selectRFM(leds&3);
+
     if (leds&8) {
       LEDR_ON;
     } else {
