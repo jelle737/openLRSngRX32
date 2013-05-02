@@ -8,9 +8,18 @@ static void _putc(void *p, char c)
 int main(void)
 {
   uint8_t i,leds=7;
+  uint32_t time;
   systemInit();
   init_printf(NULL, _putc);
   uartInit(115200);
+  delay(100);
+
+  time=millis();
+  while ((millis() - time) < 2000) {
+    if (uartAvailable() && ('R' == uartRead())) {
+      systemReset(true);      // reboot to bootloader
+    }
+  }
 
   configurePWMs();
   configureSPI();
@@ -21,7 +30,7 @@ int main(void)
   // loopy
   while (1) {
 
-    selectRFM(leds&3);
+    //selectRFM(leds&3);
 
     if (leds&8) {
       LEDR_ON;
@@ -40,8 +49,8 @@ int main(void)
     }
     leds<<=1;
     if (!leds) leds=7;
-    printf("uptime is %d\n",micros());
-    
+    printf("SPI2->SR=%x\n",SPI2->SR);
+
     while (uartAvailable()) {
       uint8_t c = uartRead();
       printf("Got (%c)\n");
@@ -49,7 +58,7 @@ int main(void)
 	systemReset(true);      // reboot to bootloader
       }
     }
-    
+
     SPI_I2S_SendData(SPI2, 0x55);
     delay(100);
   }

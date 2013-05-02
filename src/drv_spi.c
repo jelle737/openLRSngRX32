@@ -10,12 +10,10 @@
 
 void selectRFM(uint8_t which)
 {
-  digitalHi(GPIOB,GPIO_Pin_12);
-  digitalHi(GPIOC,GPIO_Pin_15);
   switch (which) {
-  case 1: digitalLo(GPIOB,GPIO_Pin_12);
+  case 1: //digitalLo(GPIOB,GPIO_Pin_12);
     break;
-  case 2: digitalLo(GPIOC,GPIO_Pin_15);
+  case 2: //digitalLo(GPIOC,GPIO_Pin_15);
     break;
   default:
     break;
@@ -40,22 +38,28 @@ void configureSPI()
   GPIO_Init(GPIOB, &GPIO_InitStructure);
 
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12; // CS1
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; // CS2
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+  //digitalHi(GPIOB,GPIO_Pin_12);
+  //digitalHi(GPIOC,GPIO_Pin_15);
 
   SPI_StructInit(&SPI_InitStruct);
   SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
   SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
   SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;
   SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-  SPI_Cmd(SPI2, ENABLE);
   SPI_Init(SPI2, &SPI_InitStruct);
   SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
+  SPI_Cmd(SPI2, ENABLE);
+  printf("SPICR1=%x\n",SPI2->CR1);
+  printf("SPICR2=%x\n",SPI2->CR2);
+
 }
 
 
