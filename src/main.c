@@ -36,6 +36,12 @@ int main(void)
   checkReflash();
   configureSPI();
   configurePWMs();
+  if (mpu6050Detect(256, &i)) {
+    printf("MPU detected, scale %d\n",i);
+  } else {
+    printf("MPU not detected?\n");
+  }
+
   for (i=0; i<16; i++) {
     setPWM(i,1000+i*50);
   }

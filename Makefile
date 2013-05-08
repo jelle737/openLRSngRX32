@@ -35,6 +35,8 @@ COMMON_SRC	 = startup_stm32f10x_md_gcc.S \
 		   drv_uart.c \
 		   drv_pwm.c \
 		   drv_spi.c \
+		   drv_i2c.c \
+		   drv_mpu6050.c \
 		   printf.c \
 		   $(CMSIS_SRC) \
 		   $(STDPERIPH_SRC)

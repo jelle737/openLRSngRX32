@@ -52,3 +52,5 @@
 #include "drv_uart.h"
 #include "drv_pwm.h"
 #include "drv_spi.h"
+#include "drv_i2c.h"
+#include "drv_mpu6050.h"
