@@ -137,7 +137,7 @@ void setPWM(uint8_t ch, uint16_t value)
       timerHardware[ch].tim->CCR4 = value;
       break;
     }
-  } 
+  }
 }
 
 static void pwmNVICConfig(uint8_t irq)
@@ -169,6 +169,8 @@ void configurePWMs()
 {
   uint8_t port;
   // PWM outputs
+  GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3, DISABLE);
+  GPIO_PinRemapConfig(GPIO_FullRemap_TIM3, DISABLE);
   for (port=0; port<12; port++) {
     pwmTimeBase(timerHardware[port].tim, 20000);
     pwmGPIOConfig(timerHardware[port].gpio, timerHardware[port].pin);
@@ -184,7 +186,7 @@ void configurePWMs()
   // Needed only on TIM1
   TIM_CtrlPWMOutputs(timerHardware[12].tim, ENABLE);
   TIM_Cmd(timerHardware[12].tim, ENABLE);
-  
+
  }
 
 

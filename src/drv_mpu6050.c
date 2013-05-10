@@ -226,10 +226,10 @@ bool mpu6050Detect(uint16_t lpf, uint8_t *scale)
 
 void mpu6050AccInit(void)
 {
-    if (mpuAccelHalf)
-        acc_1G = 255;
-    else
-        acc_1G = 512;
+  //    if (mpuAccelHalf)
+  //      acc_1G = 255;
+  //  else
+  //      acc_1G = 512;
 }
 
 void mpu6050AccRead(int16_t *accData)
@@ -262,8 +262,8 @@ void mpu6050GyroInit(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
 
-    // PB13 - MPU_INT output on rev4 hardware
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+    // PB5 - MPU_INT output on rev4 hardware
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOB, &GPIO_InitStructure);

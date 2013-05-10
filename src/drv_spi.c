@@ -39,7 +39,7 @@ void rfmWriteRegister(uint8_t which, uint8_t reg, uint8_t data)
   SPI_I2S_SendData(SPI2, ((uint16_t)(0x80 + (reg & 0x7f))<<8) + data);
   while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
   while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET);
-  SPI_I2S_ReceiveData(SPI2);  
+  SPI_I2S_ReceiveData(SPI2);
   selectRFM(0);
 }
 
