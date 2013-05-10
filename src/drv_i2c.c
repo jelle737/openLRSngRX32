@@ -278,7 +278,7 @@ void i2cInit(I2C_TypeDef *I2C)
     i2cUnstick();
 
     // Init I2C
-    //I2C_DeInit(I2Cx);
+    I2C_DeInit(I2Cx);
     I2C_StructInit(&I2C_InitStructure);
 
     I2C_ITConfig(I2Cx, I2C_IT_EVT | I2C_IT_ERR, DISABLE);       //Enable EVT and ERR interrupts - they are enabled by the first request
